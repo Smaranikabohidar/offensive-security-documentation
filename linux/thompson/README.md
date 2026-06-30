@@ -1,6 +1,6 @@
 # Thompson - TryHackMe
 
-## Machine Information
+### Machine Information
 
 | Property | Value |
 |----------|-------|
@@ -11,13 +11,13 @@
 
 ---
 
-# Objective
+## Objective
 
 Obtain initial access to the target machine through the exposed Apache Tomcat service and escalate privileges to root.
 
 ---
 
-# Attack Path
+## Attack Path
 
 ```
 Reconnaissance
@@ -43,9 +43,9 @@ Root
 
 ---
 
-# Enumeration
+## Enumeration
 
-## Nmap Scan
+### Nmap Scan
 
 Since SSH required authentication, the exposed Apache Tomcat instance on port **8080** became the primary attack surface.
 
@@ -63,7 +63,7 @@ nmap -p- -sCV -oN nmap 10.49.158.41
 
 ---
 
-## Apache Tomcat Enumeration
+### Apache Tomcat Enumeration
 
 Browsing to port **8080** presented the default Apache Tomcat landing page.
 
@@ -73,7 +73,7 @@ The **Manager App** immediately stood out as a potential entry point because it 
 
 ---
 
-## Information Disclosure
+### Information Disclosure
 
 Selecting the **Manager App** prompted for authentication.
 
@@ -98,9 +98,9 @@ Password: s3cret
 
 ---
 
-# Initial Access
+## Initial Access
 
-## Tomcat Manager Login
+### Tomcat Manager Login
 
 Using the disclosed credentials, I successfully authenticated to the Tomcat Manager.
 
@@ -112,7 +112,7 @@ This functionality can be abused to upload a malicious web application and execu
 
 ---
 
-## Creating the Malicious WAR
+### Creating the Malicious WAR
 
 I generated a Java WAR reverse shell using **msfvenom**.
 
@@ -125,7 +125,7 @@ LPORT=4444 \
 
 ---
 
-## Deploying the Payload
+### Deploying the Payload
 
 Under the **WAR file to deploy** section, I uploaded the generated `shell.war`.
 
@@ -139,7 +139,7 @@ After deployment, Tomcat automatically created the following application:
 
 ---
 
-## Receiving the Reverse Shell
+### Receiving the Reverse Shell
 
 Before triggering the payload, I prepared a Netcat listener.
 
@@ -159,7 +159,7 @@ triggered the reverse shell.
 
 ---
 
-## Shell Stabilization
+### Shell Stabilization
 
 To obtain a more interactive shell, I upgraded it using Python.
 
@@ -169,7 +169,7 @@ python3 -c 'import pty; pty.spawn("/bin/bash")'
 
 ---
 
-# Post Exploitation
+## Post Exploitation
 
 During local enumeration I discovered:
 
@@ -185,7 +185,7 @@ I also obtained the user flag.
 
 ---
 
-# Privilege Escalation
+## Privilege Escalation
 
 Further enumeration revealed two interesting files.
 
@@ -214,7 +214,7 @@ This indicated that the script was being executed with root privileges.
 
 ---
 
-## Verifying Root Execution
+### Verifying Root Execution
 
 To confirm my assumption, I modified the script.
 
@@ -240,7 +240,7 @@ This confirmed that arbitrary commands placed inside the script were executed as
 
 ---
 
-## Obtaining a Root Shell
+### Obtaining a Root Shell
 
 I replaced the contents of the script with a Bash reverse shell that connected back to my attacking machine.
 
@@ -260,7 +260,7 @@ I executed the modified script and received a reverse shell running as **root** 
 
 ---
 
-# Lessons Learned
+## Lessons Learned
 
 - Always enumerate the Tomcat Manager interface thoroughly.
 - Cancelling HTTP Basic Authentication prompts can sometimes reveal useful information.
@@ -269,7 +269,7 @@ I executed the modified script and received a reverse shell running as **root** 
 
 ---
 
-# Tools Used
+## Tools Used
 
 - Nmap
 - Netcat
