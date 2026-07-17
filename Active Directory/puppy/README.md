@@ -146,7 +146,7 @@ BloodHound confirmed that **steph.cooper_adm** was a member of the **Administrat
 
 Using these recovered credentials, an Administrator shell was obtained with **Impacket PsExec**.
 
-![administrator_shell](imges/22.png)
+![administrator_shell](images/22.png)
 
 Finally, the root flag was retrieved, completing the compromise of the domain.
 
