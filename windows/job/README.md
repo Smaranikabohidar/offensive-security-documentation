@@ -108,12 +108,12 @@ With SYSTEM access obtained, I was able to access the root flag.
 
 ## Tools Used
 
--nmap
--LibreOffice
--swaks
--printspoofer.exe
+- nmap
+- LibreOffice
+- swaks
+- printspoofer.exe
 
 ## Lesson Learned
 
--How to create a malicious macro document in LibreOffice
--How to use swaks tool to send emails
+- How to create a malicious macro document in LibreOffice
+- How to use swaks tool to send emails
