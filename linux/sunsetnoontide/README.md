@@ -8,7 +8,7 @@
 | Category   | Linux     |
 | Difficulty | Easy      |
 
-###Walkthrough
+### Walkthrough
 
 We start by running nmap scan on the target
 
