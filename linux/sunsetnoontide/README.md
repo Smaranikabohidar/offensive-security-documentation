@@ -8,16 +8,18 @@
 | Category   | Linux     |
 | Difficulty | Easy      |
 
+###Walkthrough
+
 We start by running nmap scan on the target
 
 ```bash
 nmap -sCV -p- --open 192.168.197.120 -oN nmap
 ```
-![nmap](images/nmap.png)
+![nmap](images/namp.png)
 
-on simply searching for irc, hackviser site provides interesting ways to pentest irc (internet relay chat) port . We can connect to the irc server via irssi client tool which can be installed through kali apt package.
+On simply searching for irc, hackviser site provides interesting ways to pentest irc (internet relay chat) port . We can connect to the irc server via irssi client tool which can be installed through kali apt package.
 
-once installed, we connect to the server
+Once installed, we connect to the server
 ```bash
 irssi -c 192.168.197.120
 ```
@@ -25,14 +27,14 @@ irssi -c 192.168.197.120
 
 That reveals information about the irc server version
 
-searchsploit shows the affected version is vulnerable to command execution 
+Searchsploit shows the affected version is vulnerable to command execution 
 
 ```bash
 searchsploit unreal
 ```
 ![searchsploit](images/searchsploit.png)
 
-searching on internet we found a python exploit from https://github.com/Ranger11Danger/UnrealIRCd-3.2.8.1-Backdoor/blob/master/exploit.py which can give us a reverse shell 
+Searching on internet we found a python exploit from https://github.com/Ranger11Danger/UnrealIRCd-3.2.8.1-Backdoor/blob/master/exploit.py which can give us a reverse shell 
 
 We modified the exploit code by adding out listener ip and port in the following section:
 
@@ -54,6 +56,7 @@ As soon as we ran the exploit we get a connection to out listener port
 ![trigger](images/trigger-shell.png)
 
 locat.txt flag
+
 77ddbdc542a4a87e654f2db33721eaf2
 
 ![local](images/local.txt.png)
@@ -67,6 +70,7 @@ password:root
 ![proof](images/proof1.png)
 
 grab the proof.txt 
+
 a0efdb01faedf7dd143489054d161c07
 
 ![proof2](images/proof2.png)
